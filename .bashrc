@@ -74,88 +74,11 @@ xterm*|rxvt*)
   ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-  #alias dir='dir --color=auto'
-  #alias vdir='vdir --color=auto'
-
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
+if [ -f "$HOME/.bash_aliases" ]; then
+  . "$HOME/.bash_aliases"
 fi
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-# alias ls=''
-alias sl='ls'
-alias la='ls -agGhrX --color=auto --group-directories-first'
-alias ssh='ssh -F ~/.ssh/config'
-
-#Custom key bindings
-bind -x '"\C-n":clear;la'
-
-#Custom methods
-ex(){
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)  tar xvjf 	  $1	;;
-      *.tar.gz)   tar xvzf 	  $1	;;
-      *.bz2)      bunzip2		  $1	;;
-      *.rar)      unrar x		  $1	;;
-      *.gz)       gunzip 		  $1	;;
-      *.tar)      tar xvf  	  $1	;;
-      *.tbz2)     tar xjvf 	  $1	;;
-      *.tgz)      tar xzvf 	  $1	;;
-      *.zip)      unzip       $1  ;;
-      *.Z)        uncompress  $1  ;;
-      *.7z)       7z x        $1  ;;
-      *.xz)       xz -dv      $1  ;;
-      *.lzma)     xz -dv      $1  ;;
-      *)          echo "'$1' is not a supported file by ex()" ;;
-    esac
-  else
-    echo "'$1' is not a file"
-  fi
-}
-
-shiny(){
-  CAUGHT=0
-  while [ $CAUGHT -lt 1 ] ; do
-    printf "Which pokemon would you like to take out of the computer?\n"
-    read pokemon
-    if [ $pokemon == "umbreon" ] || [ $pokemon == "pikachu" ] || [ $pokemon == "snorlax" ] ; then
-      CAUGHT=1
-      printf "Retrieving '$pokemon' from the computer\n"
-      ssh -qJ java,superkitty $pokemon
-      printf "\n\nPutting '$pokemon' back in the computer\n\n"
-    else 
-      printf "Sorry but you haven't caught $pokemon yet\n\n"
-    fi
-  done
-}
-
-kitty(){
-  printf "begin updates\n\n";
-  printf "updating\n\n"; sudo apt update;
-  printf "\n\nupgrade\n\n"; sudo apt upgrade;  
-  printf "\n\nautoremove\n\n"; sudo apt autoremove;
-}
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
+if [ -f "$HOME/.bash_methods" ]; then
+  . "$HOME/.bash_methods"
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -171,17 +94,15 @@ fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/zofcin/programs/unpacked/anaconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/zofcin/programs/unpacked/anaconda/etc/profile.d/conda.sh" ]; then
-        . "/home/zofcin/programs/unpacked/anaconda/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/zofcin/programs/unpacked/anaconda/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/home/zofcin/programs/unpacked/anaconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/zofcin/programs/unpacked/anaconda/etc/profile.d/conda.sh" ]; then
+#         . "/home/zofcin/programs/unpacked/anaconda/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/zofcin/programs/unpacked/anaconda/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
-
-PATH="$PATH:$HOME/programs/unpacked/racket/bin"
